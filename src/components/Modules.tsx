@@ -9,8 +9,12 @@ const ModuleContainer = (props: { name: string }) => {
   return (
       <div className="bg-gray-600 m-2 rounded-2xl h-96 object-cover overflow-hidden">
         <h1 className="m-1.5 text-2xl">{props.name}</h1>
-        <div className="h-[calc(100%-3rem)] relative m-2">
-          <div className="absolute bottom-0">
+        <div className="h-[calc(100%-55px)] relative m-2">
+          <div>
+            <h3>Description</h3>
+            <p>this is a dummy module. this is a dummy module. this is a dummy module. this is a dummy module. this is a dummy module. this is a dummy module.</p>
+          </div>
+          <div className="absolute bottom-0 h-[24px]">
             <label className="inline-flex relative items-center cursor-pointer">
               <input type="checkbox" value="" className="sr-only peer"/>
               <div
