@@ -1,7 +1,7 @@
 import React from "react";
+import '../webteema/nummarit.css'
 
-export default function Navbar() {
-  console.log("kissa")
+export default function Navbar({ children }: any) {
   return <header>
     <div className="h-[120px] bg-partionsininen py-[20px] px-[40px] flex">
       <a href="/" className="mr-auto">
@@ -10,12 +10,10 @@ export default function Navbar() {
           className="h-[80px] w-[160px]"/>
       </a>
       <nav>
-        <ul>
-          <li>
-            <a className="text-tausta text-[19px]">
-              KISSA
-            </a>
-          </li>
+        <ul className="h-full flex place-items-center">
+          {
+            children
+          }
         </ul>
       </nav>
     </div>
