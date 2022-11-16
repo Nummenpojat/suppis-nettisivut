@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function Navbar() {
+  console.log("kissa")
   return <header>
     <div className="h-[120px] bg-partionsininen py-[20px] px-[40px] flex">
       <a href="/" className="mr-auto">
@@ -11,8 +12,8 @@ export default function Navbar() {
       <nav>
         <ul>
           <li>
-            <a className="text-tausta text-[19px] font-normal">
-              KISSAAAA
+            <a className="text-tausta text-[19px]">
+              KISSA
             </a>
           </li>
         </ul>
