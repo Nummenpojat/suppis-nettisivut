@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/public/webteema" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/theme" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/webteema" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/theme" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/webteema" vcs="Git" />
+  </component>
+</project>
