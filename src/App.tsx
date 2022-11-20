@@ -4,15 +4,21 @@ import NavElement from "./components/navbar/navElement";
 import './theme/nummarit.css'
 import './theme/webteema.css'
 import MessageWrapper from "./components/messages/messageWrapper";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 function App() {
   return (
     <>
       <Navbar>
-        <NavElement text="WHATSAPP" linksTo=""/>
+        <NavElement text="WHATSAPP" linksTo="/whatsapp"/>
         <NavElement text="PÄÄSIVULLE" linksTo="https://nummenpojat.fi"/>
       </Navbar>
-      <MessageWrapper/>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<></>}/>
+          <Route path="/whatsapp" element={<MessageWrapper/>}/>
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
