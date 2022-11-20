@@ -1,5 +1,5 @@
 import React from "react";
-import '../theme/nummarit.css'
+import '../../theme/nummarit.css'
 
 export default function Navbar({ children }: any) {
   return <header>
