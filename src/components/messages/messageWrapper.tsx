@@ -3,9 +3,8 @@ import MessageInput from "./messageInput";
 import OneOrListSelector from "./oneOrListSelector";
 import AgegroupSelectors from "./agegroupSelectors";
 import PhoneNumberInput from "./phoneNumberInput";
-import SendMessageForm from "./sendMessageForm";
 
-export default function MessageWrapper () {
+export default function MessageWrapper() {
   const [message, setMessage] = useState("")
   const [oneOrList, setOneOrList] = useState(true)
   const [all, setAll] = useState(true)
@@ -20,7 +19,8 @@ export default function MessageWrapper () {
 
   const handleSubmit = (event: any) => {
     event.preventDefault()
-    alert("kissa")
+    alert("Viesti lähetetty")
+    location.replace("/")
   }
 
   const handleAllAgeGroups = () => {
@@ -47,16 +47,26 @@ export default function MessageWrapper () {
   return (
     <div className="w-screen h-[calc(100vh-120px)]">
       <section className="h-full flex place-content-center">
-        <SendMessageForm sendMessage={handleSubmit}>
-          <MessageInput onChange={(event) => {setMessage(event.target.value)}}/>
-          <OneOrListSelector checked={oneOrList} onClick={() => {setOneOrList(!oneOrList)}}/>
+        <form className="m-5 flex flex-col w-1/3 min-w-[300px]" onSubmit={handleSubmit}>
+          <h1 className="text-[35px] text-center">Lähetä viesti</h1>
+          <MessageInput onChange={(event) => {
+            setMessage(event.target.value)
+          }}/>
+          <OneOrListSelector checked={oneOrList} onClick={() => {
+            setOneOrList(!oneOrList)
+          }}/>
           {
             oneOrList ?
-              <AgegroupSelectors checked={all} onClick={() => {handleAllAgeGroups()}}/>
+              <AgegroupSelectors checked={all} onClick={() => {
+                handleAllAgeGroups()
+              }}/>
               :
               <PhoneNumberInput/>
           }
-        </SendMessageForm>
+          <input type="submit" value="LÄHETÄ VIESTI"
+                 className="my-5 bg-mannynvihrea p-2 rounded-[5px] font-passionOne text-white text-xl"/>
+        </form>
+        ;
       </section>
     </div>
   )
