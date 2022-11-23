@@ -2,11 +2,12 @@ import React, {useState} from "react";
 import MessageInput from "./messageInput";
 import OneOrListSelector from "./oneOrListSelector";
 import AgegroupSelectors from "./agegroupSelectors";
-import PhoneNumberInput from "./phoneNumberInput";
+import axios from "axios";
 
 export default function MessageWrapper() {
   const [message, setMessage] = useState("")
-  const [oneOrList, setOneOrList] = useState(true)
+  const [phoneNumber, setPhoneNumber] = useState("")
+  const [toList, setToList] = useState(true)
   const [all, setAll] = useState(true)
 
   // TODO When API can handle specific age-groups add functionality to support them in frontend
@@ -19,8 +20,33 @@ export default function MessageWrapper() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault()
-    alert("Viesti lähetetty")
-    location.replace("/")
+    if (toList) {
+      if (all) {
+        axios.post("http://localhost:3001/modules/whatsapp/send/list", {
+          message: message
+        })
+          .then((response) => {
+            alert(response.data)
+          })
+          .catch((reason) => {
+            console.error(reason)
+            alert(reason)
+          })
+      }
+    } else {
+      axios.post("http://localhost:3001/modules/whatsapp/send/one", {
+        message: message,
+        number: phoneNumber
+      })
+        .then((response) => {
+          alert(response.data)
+        })
+        .catch((reason) => {
+          console.error(reason)
+          alert(reason)
+        })
+    }
+
   }
 
   const handleAllAgeGroups = () => {
@@ -52,16 +78,23 @@ export default function MessageWrapper() {
           <MessageInput onChange={(event) => {
             setMessage(event.target.value)
           }}/>
-          <OneOrListSelector checked={oneOrList} onClick={() => {
-            setOneOrList(!oneOrList)
+          <OneOrListSelector checked={toList} onClick={() => {
+            setToList(!toList)
           }}/>
           {
-            oneOrList ?
+            toList ?
               <AgegroupSelectors checked={all} onClick={() => {
                 handleAllAgeGroups()
               }}/>
               :
-              <PhoneNumberInput/>
+              <>
+                <label>
+                  Numero mihin viesti lähetetään
+                </label><br/>
+                <input onChange={(event) => setPhoneNumber(event.target.value)} className="bg-gray-100 w-full rounded-[5px] p-0.5" type="tel"
+                       placeholder=" Esim +3581234567"/>
+              </>
+
           }
           <input type="submit" value="LÄHETÄ VIESTI"
                  className="my-5 bg-mannynvihrea p-2 rounded-[5px] font-passionOne text-white text-xl"/>
