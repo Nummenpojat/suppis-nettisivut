@@ -91,10 +91,11 @@ export default function MessageWrapper() {
                 <label>
                   Numero mihin viesti lähetetään
                 </label><br/>
-                <input onChange={(event) => setPhoneNumber(event.target.value)} className="bg-gray-100 w-full rounded-[5px] p-0.5" type="tel"
+                <input onChange={(event) => setPhoneNumber(event.target.value)}
+                       className="bg-gray-100 w-full rounded-[5px] p-0.5"
+                       type="tel"
                        placeholder=" Esim +3581234567"/>
               </>
-
           }
           <input type="submit" value="LÄHETÄ VIESTI"
                  className="my-5 bg-mannynvihrea p-2 rounded-[5px] font-passionOne text-white text-xl"/>
