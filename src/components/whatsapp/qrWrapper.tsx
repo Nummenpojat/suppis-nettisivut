@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 
 const QrWrapper = () => {
 
   const [qr, setQr] = useState("")
+  const [error, setError] = useState("Loading...")
 
   useEffect(() => {
     axios.get("http://localhost:3001/modules/whatsapp/new")
@@ -13,8 +14,9 @@ const QrWrapper = () => {
         setQr(response.data.replace(/\+/g, "%2B"))
 
       })
-      .catch((reason) => {
-        throw `Error: "${reason}" -- Application was not able to reach the server`
+      .catch((reason: AxiosError) => {
+        setError(reason.message)
+        throw `Error: "${reason.message}" -- Application was not able to reach the server`
       })
   }, [])
 
@@ -23,7 +25,7 @@ const QrWrapper = () => {
       <div className="w-screen h-[calc(100vh-120px)] place-items-center flex flex-col">
         <h1 className="text-[35px]">GENERATING NEW QR CODE</h1>
         {qr == "" ?
-          <p>Loading...</p>
+          <p>{error}</p>
           :
           <img src={`https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${qr}`}
                className="m-5 h-full aspect-square"/>
