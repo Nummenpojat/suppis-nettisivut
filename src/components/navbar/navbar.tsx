@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import '../../theme/nummarit.css'
 
 export default function Navbar({children}: any) {
+  const [mobileNav, setMobileNav] = useState(false)
   return (
     <header>
       <div className="h-[120px] bg-partionsininen py-[20px] px-[40px] flex ">
@@ -18,10 +19,15 @@ export default function Navbar({children}: any) {
           </ul>
         </nav>
         <nav className="md:hidden place-items-center flex">
-          <button>
+          <button onClick={() => {setMobileNav(!mobileNav)}}>
             <img width="30px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Octicons-three-bars.svg/1200px-Octicons-three-bars.svg.png"/>
           </button>
         </nav>
+      </div>
+      <div className={mobileNav ? "bg-partionsininen flex flex-col" : "hidden"}>
+        {
+          children
+        }
       </div>
     </header>
   );
