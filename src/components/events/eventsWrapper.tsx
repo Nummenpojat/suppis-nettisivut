@@ -22,7 +22,7 @@ const EventsWrapper = () => {
 
   return (
     <div className="w-screen flex place-content-center">
-      <main className="w-1/2 h-[calc(100vh-120px)] min-w-[500px]">
+      <main className="w-1/2 h-[calc(100vh-120px)] min-w-[300px] flex flex-col place-items-center">
         <h1 className="text-center text-[35px]">TAPAHTUMAT</h1>
         <input className="bg-gray-100 w-full rounded-[5px] p-1 mt-5 mx-5" type="text" placeholder=" Hae tapahtumaa..." onChange={handleSearch}/>
         <div className="bg-gray-100 w-full rounded-[5px] p-1 mx-5 my-4">
