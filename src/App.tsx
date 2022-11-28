@@ -6,6 +6,7 @@ import './theme/webteema.css'
 import MessageWrapper from "./components/whatsapp/messages/messageWrapper";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import QrWrapper from "./components/whatsapp/qrWrapper";
+import MainPage from "./components/mainPage";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
       </Navbar>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<></>}/>
+          <Route path="/" element={<MainPage/>}/>
           <Route path="/events" element={<></>}/>
           <Route path="/whatsapp/new" element={<QrWrapper/>}/>
           <Route path="/whatsapp/send" element={<MessageWrapper/>}/>

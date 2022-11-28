@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios, {AxiosError} from "axios";
+import {getIdTokenForApiCall} from "../../firebaseConfig";
 
 const QrWrapper = () => {
 
@@ -7,17 +8,19 @@ const QrWrapper = () => {
   const [error, setError] = useState("Loading...")
 
   useEffect(() => {
-    axios.get("http://localhost:3001/modules/whatsapp/new")
-      .then((response) => {
+    getIdTokenForApiCall((idToken) => {
+      axios.get("http://localhost:3001/modules/whatsapp/new")
+        .then((response) => {
 
-        // Regex replaces all + with %2B because + can't be used in urls parameter values, so they are converted to %2B which is equivalent
-        setQr(response.data.replace(/\+/g, "%2B"))
+          // Regex replaces all + with %2B because + can't be used in urls parameter values, so they are converted to %2B which is equivalent
+          setQr(response.data.replace(/\+/g, "%2B"))
 
-      })
-      .catch((reason: AxiosError) => {
-        setError(reason.message)
-        throw `Error: "${reason.message}" -- Application was not able to reach the server`
-      })
+        })
+        .catch((reason: AxiosError) => {
+          setError(reason.message)
+          throw `Error: "${reason.message}" -- Application was not able to reach the server`
+        })
+    })
   }, [])
 
   return (
