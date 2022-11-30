@@ -63,6 +63,12 @@ export const getIdTokenForApiCall = (callback: (idToken: string) => void) => {
 // TODO make this function accept many claims and it checks them all at once
 export const verifyClaim = (user: User | null, claim: string) => {
   if (user) {
+
+    // admin.suppis@nummenpojat.fi is head admin account, so it can interact with suppis even if it's not given permission on custom claims
+    if (user.email == "admin.suppis@nummenpojat.fi") {
+      return;
+    }
+
     getIdTokenResult(user)
       .then((IdTokenResult) => {
         if (!IdTokenResult.claims[claim]) {
