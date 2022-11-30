@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import axios, {AxiosError} from "axios";
-import {getIdTokenForApiCall} from "../../firebaseConfig";
+import {getIdTokenForApiCall} from "../firebaseConfig";
 
-const QrWrapper = () => {
+const Qr = () => {
 
   const [qr, setQr] = useState("")
   const [error, setError] = useState("Loading...")
@@ -37,4 +37,4 @@ const QrWrapper = () => {
     </>
   )
 }
-export default QrWrapper
+export default Qr

@@ -1,14 +1,26 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Navbar from "./components/navbar/navbar";
 import NavElement from "./components/navbar/navElement";
 import './theme/nummarit.css'
 import './theme/webteema.css'
-import MessageWrapper from "./components/whatsapp/messages/messageWrapper";
+import MessageWrapper from "./pages/message";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import QrWrapper from "./components/whatsapp/qrWrapper";
-import MainPage from "./components/mainPage";
+import Qr from "./pages/qr";
+import Main from "./pages/main";
+import Login from "./pages/login";
+import {onAuthStateChanged, User, getIdTokenResult} from "firebase/auth";
+import {auth, getIdTokenForApiCall, signOut, verifyClaim} from "./firebaseConfig";
 
 function App() {
+  useEffect(() => {
+    onAuthStateChanged(auth, (user: User | null) => {
+      if (user == null && window.location.pathname !== "/login") {
+          location.replace("/login")
+      }
+      verifyClaim(user, "admin");
+    })
+  }, [])
+
   return (
     <>
       <Navbar>
@@ -19,9 +31,10 @@ function App() {
       </Navbar>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<MainPage/>}/>
+          <Route path="/" element={<Main/>}/>
           <Route path="/events" element={<></>}/>
-          <Route path="/whatsapp/new" element={<QrWrapper/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/whatsapp/new" element={<Qr/>}/>
           <Route path="/whatsapp/send" element={<MessageWrapper/>}/>
         </Routes>
       </BrowserRouter>

@@ -1,6 +1,13 @@
 // Import the functions you need from the SDKs you need
 import {initializeApp} from "firebase/app";
-import {getAuth, signInWithPopup, GoogleAuthProvider, signOut as signOutFirebase} from "firebase/auth"
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut as signOutFirebase,
+  User,
+  getIdTokenResult
+} from "firebase/auth"
 import {getFirestore} from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -43,7 +50,7 @@ export const signOut = () => {
  * Callback function to get ID token for making request to the api
  * @param callback
  */
-export const getIdTokenForApiCall = async (callback: (idToken: string) => void) => {
+export const getIdTokenForApiCall = (callback: (idToken: string) => void) => {
   auth.currentUser?.getIdToken()
     .then((idToken: string) => {
       callback(idToken)
@@ -51,4 +58,18 @@ export const getIdTokenForApiCall = async (callback: (idToken: string) => void) 
     .catch((reason) => {
       throw reason
     })
+}
+
+// TODO make this function accept many claims and it checks them all at once
+export const verifyClaim = (user: User | null, claim: string) => {
+  if (user) {
+    getIdTokenResult(user)
+      .then((IdTokenResult) => {
+        if (!IdTokenResult.claims[claim]) {
+          alert(" Sinulla ei ole oikeuksia Suppikseen\n Jos sinulla @nummenpojat.fi päätteinen email tili yritä uudelleen sillä\n\n Nyt sinut kirjataan ulos")
+          signOut()
+          location.replace("/login")
+        }
+      })
+  }
 }

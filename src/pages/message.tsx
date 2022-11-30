@@ -1,9 +1,9 @@
 import React, {useState} from "react";
-import MessageInput from "./messageInput";
-import OneOrListSelector from "./oneOrListSelector";
-import AgegroupSelectors from "./agegroupSelectors";
+import MessageInput from "../components/messages/messageInput";
+import OneOrListSelector from "../components/messages/oneOrListSelector";
+import AgegroupSelectors from "../components/messages/agegroupSelectors";
 import axios from "axios";
-import {getIdTokenForApiCall} from "../../../firebaseConfig";
+import {getIdTokenForApiCall} from "../firebaseConfig";
 
 export default function MessageWrapper() {
   const [message, setMessage] = useState("")

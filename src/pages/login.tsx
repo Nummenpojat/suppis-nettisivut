@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {auth, signInWithGoogle, signOut} from "../firebaseConfig";
 import {onAuthStateChanged} from "firebase/auth";
 
-const MainPage = () => {
+const Login = () => {
 
   const [signedInAs, setSignedInAs] = useState("")
 
@@ -36,4 +36,4 @@ const MainPage = () => {
     </div>
   )
 }
-export default MainPage
+export default Login
