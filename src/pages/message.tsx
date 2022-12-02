@@ -1,8 +1,9 @@
 import React, {useState} from "react";
-import MessageInput from "./messageInput";
-import OneOrListSelector from "./oneOrListSelector";
-import AgegroupSelectors from "./agegroupSelectors";
+import MessageInput from "../components/messages/messageInput";
+import OneOrListSelector from "../components/messages/oneOrListSelector";
+import AgegroupSelectors from "../components/messages/agegroupSelectors";
 import axios from "axios";
+import {getIdTokenForApiCall} from "../firebaseConfig";
 
 export default function MessageWrapper() {
   const [message, setMessage] = useState("")
@@ -18,35 +19,44 @@ export default function MessageWrapper() {
   const [vaeltajat, setVaeltaja] = useState(false)
   const [aikuiset, setAikuiset] = useState(false)*/
 
-  const handleSubmit = (event: any) => {
+  const handleSend = (event: any) => {
     event.preventDefault()
     if (toList) {
       if (all) {
-        axios.post("http://localhost:3001/modules/whatsapp/send/list", {
-          message: message
+        getIdTokenForApiCall((idToken) => {
+          axios.post("http://localhost:3001/modules/whatsapp/send/list", {
+            message: message
+          }, {
+            headers: {
+              idtoken: idToken
+            }
+          })
+            .then((response) => {
+              alert(response.data)
+            })
+            .catch((reason) => {
+              console.error(reason.response)
+            })
+        })
+      }
+    } else {
+      getIdTokenForApiCall((idToken) => {
+        axios.post("http://localhost:3001/modules/whatsapp/send/one", {
+          message: message,
+          number: phoneNumber
+        }, {
+          headers: {
+            idtoken: idToken
+          }
         })
           .then((response) => {
             alert(response.data)
           })
           .catch((reason) => {
-            console.error(reason)
-            alert(reason)
+            console.error(reason.response)
           })
-      }
-    } else {
-      axios.post("http://localhost:3001/modules/whatsapp/send/one", {
-        message: message,
-        number: phoneNumber
       })
-        .then((response) => {
-          alert(response.data)
-        })
-        .catch((reason) => {
-          console.error(reason)
-          alert(reason)
-        })
     }
-
   }
 
   const handleAllAgeGroups = () => {
@@ -73,7 +83,7 @@ export default function MessageWrapper() {
   return (
     <div className="w-screen h-[calc(100vh-120px)]">
       <section className="h-full flex place-content-center">
-        <form className="m-5 flex flex-col w-1/3 min-w-[300px]" onSubmit={handleSubmit}>
+        <form className="m-5 flex flex-col w-1/3 min-w-[300px]" onSubmit={handleSend}>
           <h1 className="text-[35px] text-center">Lähetä viesti</h1>
           <MessageInput onChange={(event) => {
             setMessage(event.target.value)
