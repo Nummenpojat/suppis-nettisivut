@@ -15,7 +15,7 @@ export default function Navbar({children}: any) {
             className="h-[80px] w-[160px]"/>
         </a>
         <nav className="hidden md:flex">
-          <ul className="h-full flex place-items-center">
+          <ul className="h-full flex place-items-center gap-[40px]">
             {
               children
             }
@@ -34,14 +34,13 @@ export default function Navbar({children}: any) {
                 <path d="M71.029 71.029c9.373-9.372 24.569-9.372 33.942 0L256 222.059l151.029-151.03c9.373-9.372 24.569-9.372 33.942 0 9.372 9.373 9.372 24.569 0 33.942L289.941 256l151.03 151.029c9.372 9.373 9.372 24.569 0 33.942-9.373 9.372-24.569 9.372-33.942 0L256 289.941l-151.029 151.03c-9.373 9.372-24.569 9.372-33.942 0-9.372-9.373-9.372-24.569 0-33.942L222.059 256 71.029 104.971c-9.372-9.373-9.372-24.569 0-33.942z"></path>
               </svg>
               </div>
-
             </span>
           </button>
         </nav>
       </div>
-      <div className={mobileNav ? "bg-partionsininen flex flex-col" : "hidden"}>
+      <div className={mobileNav ? "bg-partionsininen flex flex-col pt-[1.5em]" : "hidden"}>
         {
-          children
+          children.map((child: any) => <div className="h-[60px] px-[30px] list-none">{child}</div>)
         }
       </div>
     </header>
