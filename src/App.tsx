@@ -10,11 +10,12 @@ import Main from "./pages/main";
 import Login from "./pages/login";
 import {onAuthStateChanged, User, getIdTokenResult} from "firebase/auth";
 import {auth, getIdTokenForApiCall, signOut, verifyClaim} from "./firebaseConfig";
+import Error from "./pages/error";
 
 function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (user: User | null) => {
-      if (user == null && window.location.pathname !== "/login") {
+      if (user == null && window.location.pathname != "/login") {
           location.replace("/login")
       }
       verifyClaim(user, "admin");
@@ -37,6 +38,7 @@ function App() {
           <Route path="/login" element={<Login/>}/>
           <Route path="/whatsapp/new" element={<Qr/>}/>
           <Route path="/whatsapp/send" element={<MessageWrapper/>}/>
+          <Route path="/*" element={<Error statusCode={404} message="Page not found"/>}/>
         </Routes>
       </BrowserRouter>
     </>
