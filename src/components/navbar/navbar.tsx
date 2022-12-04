@@ -12,7 +12,7 @@ export default function Navbar({children}: any) {
         <a href="/" className="mr-auto">
           <img
             src="https://nummenpojat.kuvat.fi/kuvat/Kuvituskuvaa%20ja%20grafiikkaa/Graafinen%20ohje%20ja%20br%C3%A4ndimateriaalit/Lippukunnan%20logot/HN%20ovaali%20logo.png?img=img4k"
-            className="h-[80px] w-[160px]"/>
+            className="h-[80px] w-[160px]" alt="Nummenpojat logo"/>
         </a>
         <nav className="hidden md:flex">
           <ul className="h-full flex place-items-center gap-[40px]">
@@ -46,5 +46,3 @@ export default function Navbar({children}: any) {
     </header>
   );
 }
-<img width="30px"
-     src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Octicons-three-bars.svg/1200px-Octicons-three-bars.svg.png"/>

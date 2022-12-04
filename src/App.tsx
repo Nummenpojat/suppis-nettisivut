@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Navbar from "./components/navbar/navbar";
 import NavElement from "./components/navbar/navElement";
 import './theme/nummarit.css'
@@ -8,8 +8,8 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Qr from "./pages/qr";
 import Main from "./pages/main";
 import Login from "./pages/login";
-import {onAuthStateChanged, User, getIdTokenResult} from "firebase/auth";
-import {auth, getIdTokenForApiCall, signOut, verifyClaim} from "./firebaseConfig";
+import {onAuthStateChanged, User} from "firebase/auth";
+import {auth, verifyClaim} from "./firebaseConfig";
 import Error from "./pages/error";
 
 function App() {
