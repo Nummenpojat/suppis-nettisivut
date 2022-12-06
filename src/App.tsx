@@ -25,7 +25,6 @@ function App() {
   return (
     <>
       <Navbar>
-        <NavElement text="TAPAHTUMAT" linksTo="/events"/>
         <NavElement text="LUO WHATSAPP ISTUNTO" linksTo="/whatsapp/new"/>
         <NavElement text="LÄHETÄ VIESTI" linksTo="/whatsapp/send"/>
         <NavElement text="PROFIILI" linksTo="/login"/>
