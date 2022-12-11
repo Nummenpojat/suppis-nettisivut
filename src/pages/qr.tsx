@@ -4,7 +4,7 @@ import {getIdTokenForApiCall} from "../firebaseConfig";
 
 const Qr = () => {
 
-  const [qr, setQr] = useState("")
+  /*const [qr, setQr] = useState("")
   const [error, setError] = useState("Loading...")
 
   useEffect(() => {
@@ -39,6 +39,7 @@ const Qr = () => {
         }
       </div>
     </>
-  )
+  )*/
+  return <></>
 }
 export default Qr

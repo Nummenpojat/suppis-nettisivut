@@ -25,8 +25,6 @@ function App() {
   return (
     <>
       <Navbar>
-        <NavElement text="TAPAHTUMAT" linksTo="/events"/>
-        <NavElement text="LUO WHATSAPP ISTUNTO" linksTo="/whatsapp/new"/>
         <NavElement text="LÄHETÄ VIESTI" linksTo="/whatsapp/send"/>
         <NavElement text="PROFIILI" linksTo="/login"/>
         <NavElement text="PÄÄSIVULLE" linksTo="https://nummenpojat.fi"/>
@@ -34,7 +32,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Main/>}/>
-          <Route path="/events" element={<></>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/whatsapp/new" element={<Qr/>}/>
           <Route path="/whatsapp/send" element={<MessageWrapper/>}/>
