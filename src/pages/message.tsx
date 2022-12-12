@@ -52,7 +52,7 @@ export default function MessageWrapper() {
                  className="p-1.5 bg-white rounded-2xl h-[50%] aspect-square" alt="qr code"/>
           }
           <button
-            className="my-5 bg-mannynvihrea p-2 rounded-[5px] font-passionOne text-white text-xl text-center w-1/4 w-[300px]"
+            className="nummari-button"
             onClick={() => setShowQr(false)}>
             SULJE
           </button>
@@ -94,7 +94,7 @@ export default function MessageWrapper() {
                 </>
             }
             <input onClick={handleSend} type="submit" value="LÄHETÄ VIESTI"
-                   className="my-5 bg-mannynvihrea p-2 rounded-[5px] font-passionOne text-white text-xl"/>
+                   className="nummari-button m-auto"/>
           </form>
         </section>
       }

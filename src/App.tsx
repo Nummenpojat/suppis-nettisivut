@@ -5,7 +5,6 @@ import './theme/nummarit.css'
 import './theme/webteema.css'
 import MessageWrapper from "./pages/message";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Qr from "./pages/qr";
 import Main from "./pages/main";
 import Login from "./pages/login";
 import {onAuthStateChanged, User} from "firebase/auth";
@@ -33,7 +32,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Main/>}/>
           <Route path="/login" element={<Login/>}/>
-          <Route path="/whatsapp/new" element={<Qr/>}/>
           <Route path="/whatsapp/send" element={<MessageWrapper/>}/>
           <Route path="/*" element={<Error statusCode={404} message="Page not found"/>}/>
         </Routes>
