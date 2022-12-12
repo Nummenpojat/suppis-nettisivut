@@ -8,7 +8,7 @@ export default function MessageWrapper() {
   const [qr, setQr] = useState("")
   const [toList, setToList] = useState(true)
   const [all, setAll] = useState(true)
-  const [showQr, setShowQr] = useState(false)
+  const [showQr, setShowQr] = useState(true)
 
   const handleSend = async (event: any) => {
     event.preventDefault()
@@ -44,15 +44,15 @@ export default function MessageWrapper() {
     <div className="w-screen h-[calc(100vh-120px)]">
       {showQr ?
         <section className="place-items-center flex flex-col">
-          <h1 className="text-[35px]">GENERATING NEW QR CODE</h1>
+          <h1 className="text-[35px]">KIRJAA WHATSAPP SISÄÄN</h1>
           {qr == "" ?
-            <p>Loading...</p>
+            <p>Lataa...</p>
             :
-            <img src={`https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${qr}`}
-                 className="m-5 max-h-[400px] aspect-square" alt="qr code"/>
+            <img src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${qr}`}
+                 className="p-1.5 bg-white rounded-2xl h-[50%] aspect-square" alt="qr code"/>
           }
           <button
-            className="my-5 bg-mannynvihrea p-2 rounded-[5px] font-passionOne text-white text-xl text-center w-1/4 min-w-[300px]"
+            className="my-5 bg-mannynvihrea p-2 rounded-[5px] font-passionOne text-white text-xl text-center w-1/4 w-[300px]"
             onClick={() => setShowQr(false)}>
             SULJE
           </button>
