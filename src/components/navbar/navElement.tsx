@@ -1,9 +1,9 @@
-import React, {ReactNode} from "react";
+import React, {ReactElement, ReactNode} from "react";
 
-export default function NavElement(props: { children?: ReactNode[], text: string, linksTo: string}) {
+export default function NavElement(props: { children?: ReactElement[], text: string, linksTo: string}) {
   return (
-    <li className="group flex h-[60px] place-items-center flex-col">
-      <a href={props.linksTo}>
+    <li className="group h-[60px] relative">
+      <a href={props.linksTo} className="h-full w-full flex place-items-center">
         <div className="flex place-items-center">
           <h1 className="text-tausta text-[19px]  group-hover:text-mannynvihrea duration-100">
             {
@@ -20,7 +20,7 @@ export default function NavElement(props: { children?: ReactNode[], text: string
         </div>
       </a>
       { props.children != null ?
-        <ul className="group-hover:block hidden flex-col bg-white absolute top-auto">
+        <ul className="group-hover:block hidden flex-col bg-white w-[200px] absolute top-[60px] left-0 duration-100">
           {
             props.children
           }

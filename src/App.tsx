@@ -11,12 +11,13 @@ import Login from "./pages/login";
 import {onAuthStateChanged, User} from "firebase/auth";
 import {auth, verifyClaim} from "./firebaseConfig";
 import Error from "./pages/error";
+import NavDropdownElement from "./components/navbar/navDropdownElement";
 
 function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (user: User | null) => {
       if (user == null && window.location.pathname != "/login") {
-          location.replace("/login")
+        location.replace("/login")
       }
       verifyClaim(user, "admin");
     })
@@ -25,7 +26,12 @@ function App() {
   return (
     <>
       <Navbar>
-        <NavElement text="LÄHETÄ VIESTI" linksTo="/whatsapp/send"/>
+        <NavElement text="LÄHETÄ VIESTI" linksTo="/whatsapp/send">
+          <NavDropdownElement text="KISSA" linksTo="/kissa"/>
+          <NavDropdownElement text="KISSA" linksTo="/kissa"/>
+          <NavDropdownElement text="KISSA" linksTo="/kissa"/>
+          <NavDropdownElement text="KISSA" linksTo="/kissa"/>
+        </NavElement>
         <NavElement text="PROFIILI" linksTo="/login"/>
         <NavElement text="PÄÄSIVULLE" linksTo="https://nummenpojat.fi"/>
       </Navbar>
