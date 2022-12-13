@@ -5,13 +5,10 @@ import './theme/nummarit.css'
 import './theme/webteema.css'
 import MessageWrapper from "./pages/message";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Qr from "./pages/qr";
-import Main from "./pages/main";
 import Login from "./pages/login";
 import {onAuthStateChanged, User} from "firebase/auth";
 import {auth, verifyClaim} from "./firebaseConfig";
 import Error from "./pages/error";
-import NavDropdownElement from "./components/navbar/navDropdownElement";
 
 function App() {
   useEffect(() => {
@@ -26,18 +23,12 @@ function App() {
   return (
     <>
       <Navbar>
-        <NavElement text="LÄHETÄ VIESTI" linksTo="/whatsapp/send">
-          <NavDropdownElement text="KISSA" linksTo="/kissa"/>
-          <NavDropdownElement text="KISSA" linksTo="/kissa"/>
-          <NavDropdownElement text="KISSA" linksTo="/kissa"/>
-          <NavDropdownElement text="KISSA" linksTo="/kissa"/>
-        </NavElement>
+        <NavElement text="LÄHETÄ VIESTI" linksTo="/whatsapp/send"/>
         <NavElement text="PROFIILI" linksTo="/login"/>
         <NavElement text="PÄÄSIVULLE" linksTo="https://nummenpojat.fi"/>
       </Navbar>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Main/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/whatsapp/send" element={<MessageWrapper/>}/>
           <Route path="/*" element={<Error statusCode={404} message="Page not found"/>}/>

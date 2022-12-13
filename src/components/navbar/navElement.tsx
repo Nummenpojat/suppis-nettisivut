@@ -20,7 +20,7 @@ export default function NavElement(props: { children?: ReactElement[], text: str
         </div>
       </a>
       { props.children != null ?
-        <ul className="group-hover:block hidden flex-col bg-white w-[200px] absolute top-[60px] left-0 duration-100">
+        <ul className="group-hover:block hidden flex-col bg-white w-[200px] absolute top-[60px] left-0 duration-100 shadow">
           {
             props.children
           }
