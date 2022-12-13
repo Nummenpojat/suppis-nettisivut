@@ -8,7 +8,7 @@ export default function MessageWrapper() {
   const [qr, setQr] = useState("")
   const [toList, setToList] = useState(true)
   const [all, setAll] = useState(true)
-  const [showQr, setShowQr] = useState(true)
+  const [showQr, setShowQr] = useState(false)
 
   const handleSend = async (event: any) => {
     event.preventDefault()
@@ -94,7 +94,7 @@ export default function MessageWrapper() {
                 </>
             }
             <input onClick={handleSend} type="submit" value="LÄHETÄ VIESTI"
-                   className="nummari-button m-auto"/>
+                   className="nummari-button mx-auto"/>
           </form>
         </section>
       }
