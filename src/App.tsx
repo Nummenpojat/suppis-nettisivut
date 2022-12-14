@@ -5,7 +5,6 @@ import './theme/nummarit.css'
 import './theme/webteema.css'
 import MessageWrapper from "./pages/message";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Main from "./pages/main";
 import Login from "./pages/login";
 import {onAuthStateChanged, User} from "firebase/auth";
 import {auth, verifyClaim} from "./firebaseConfig";
@@ -15,7 +14,7 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (user: User | null) => {
       if (user == null && window.location.pathname != "/login") {
-          location.replace("/login")
+        location.replace("/login")
       }
       verifyClaim(user, "admin");
     })
@@ -30,7 +29,6 @@ function App() {
       </Navbar>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Main/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/whatsapp/send" element={<MessageWrapper/>}/>
           <Route path="/*" element={<Error statusCode={404} message="Page not found"/>}/>
