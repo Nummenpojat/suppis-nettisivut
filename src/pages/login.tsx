@@ -23,13 +23,13 @@ const Login = () => {
           <h1 className="text-[40px] text-center">
             {`OLET KIRJATUNUT KÄYTTÄJÄLLÄ: ${signedInAs}`}
           </h1>
-          <button onClick={signOut} className="my-5 bg-mansikanpunainen p-2 m-2 rounded-[5px] font-passionOne text-white text-xl">
+          <button onClick={signOut} className="nummari-button mx-auto bg-mansikanpunainen">
             KIRJAUDU ULOS
           </button>
         </div>
 
         :
-        <button onClick={signInWithGoogle} className="my-5 bg-mannynvihrea p-2 rounded-[5px] font-passionOne text-white text-xl w-1/3 min-w-[300px]">
+        <button onClick={signInWithGoogle} className="nummari-button mx-auto">
           KIRJAUDU SISÄÄN
         </button>
       }

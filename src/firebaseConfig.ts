@@ -48,16 +48,14 @@ export const signOut = () => {
 
 /**
  * Callback function to get ID token for making request to the api
- * @param callback
+ * @returns idToken
  */
-export const getIdTokenForApiCall = (callback: (idToken: string) => void) => {
-  auth.currentUser?.getIdToken()
-    .then((idToken: string) => {
-      callback(idToken)
-    })
-    .catch((reason) => {
-      throw reason
-    })
+export const getIdTokenForApiCall = async () => {
+  try {
+    return await auth.currentUser?.getIdToken()
+  } catch (error) {
+    throw error
+  }
 }
 
 // TODO make this function accept many claims and it checks them all at once
