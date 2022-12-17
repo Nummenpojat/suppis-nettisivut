@@ -1,14 +1,39 @@
 import React, {useState} from "react";
 import {getIdTokenForApiCall} from "../firebaseConfig";
 import axios, {AxiosResponse} from "axios";
+const Papa = require("papaparse")
 
 export default function MessageWrapper() {
   const [message, setMessage] = useState("")
   const [phoneNumber, setPhoneNumber] = useState("")
   const [qr, setQr] = useState("")
   const [toList, setToList] = useState(true)
-  const [all, setAll] = useState(true)
   const [showQr, setShowQr] = useState(false)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+
+  const kissa = (event: any) => {
+    setSelectedFile(event.target.files[0])
+  }
+
+  const handleCsvToJson = () => {
+
+    if (selectedFile == null) {
+      console.error("You must select a file")
+      return
+    }
+
+    let numbers: string[] = []
+
+    Papa.parse(selectedFile, {
+      complete: (results: any) => {
+        results.data.forEach((data: string) => {
+          numbers.push(data[0])
+        })
+        console.log(numbers)
+        console.log("Numbers parsed")
+      }
+    })
+  }
 
   const handleSend = async (event: any) => {
     event.preventDefault()
@@ -37,6 +62,8 @@ export default function MessageWrapper() {
           alert(error.response.data)
         }
       }
+    } else {
+      handleCsvToJson()
     }
   }
 
@@ -71,18 +98,7 @@ export default function MessageWrapper() {
             </label>
             {
               toList ?
-                <>
-                  <label>
-                    Mille ikäkausille viesti lähetetään
-                  </label><br/>
-                  <ul>
-                    <li>
-                      <input type="checkbox" className="m-1.5 checked:accent-mannynvihrea" defaultChecked={all}
-                             onClick={() => setAll(!all)}/>
-                      <label>Kaikki ikäkaudet</label>
-                    </li>
-                  </ul>
-                </>
+                  <input type="file" onChange={kissa} className="mx-1.5"/>
                 :
                 <>
                   <label>
@@ -94,7 +110,7 @@ export default function MessageWrapper() {
                 </>
             }
             <input onClick={handleSend} type="submit" value="LÄHETÄ VIESTI"
-                   className="nummari-button mx-auto"/>
+                   className="nummari-button mx-auto block"/>
           </form>
         </section>
       }
