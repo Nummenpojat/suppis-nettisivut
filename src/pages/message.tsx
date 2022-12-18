@@ -11,7 +11,7 @@ export default function MessageWrapper() {
   const [showQr, setShowQr] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
-  const kissa = (event: any) => {
+  const setFile = (event: any) => {
     setSelectedFile(event.target.files[0])
   }
 
@@ -98,7 +98,7 @@ export default function MessageWrapper() {
             </label>
             {
               toList ?
-                  <input type="file" onChange={kissa} className="mx-1.5"/>
+                  <input type="file" onChange={setFile} className="mx-1.5"/>
                 :
                 <>
                   <label>
