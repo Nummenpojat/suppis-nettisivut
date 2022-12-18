@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {getIdTokenForApiCall} from "../firebaseConfig";
 import axios, {AxiosResponse} from "axios";
+
 const Papa = require("papaparse")
 
 export default function MessageWrapper() {
@@ -15,23 +16,27 @@ export default function MessageWrapper() {
     setSelectedFile(event.target.files[0])
   }
 
-  const handleCsvToJson = () => {
-
-    if (selectedFile == null) {
-      console.error("You must select a file")
-      return
-    }
-
-    let numbers: string[] = []
-
-    Papa.parse(selectedFile, {
-      complete: (results: any) => {
-        results.data.forEach((data: string) => {
-          numbers.push(data[0])
-        })
-        console.log(numbers)
-        console.log("Numbers parsed")
+  const handleCsvToJson = (): Promise<any> => {
+    return new Promise<any>((resolve, reject) => {
+      if (selectedFile == null) {
+        reject("You must select a file")
       }
+
+      let numbers: string[] = []
+
+      console.log(numbers)
+      Papa.parse(selectedFile, {
+        complete: (results: any) => {
+          results.data.forEach((data: string) => {
+            if (data[0] != null && data[0] != "") {
+              numbers.push(data[0])
+            }
+          })
+          console.log(numbers)
+          resolve(numbers)
+        }
+      })
+      console.log(numbers)
     })
   }
 
@@ -62,8 +67,26 @@ export default function MessageWrapper() {
           alert(error.response.data)
         }
       }
-    } else {
-      handleCsvToJson()
+    }
+    if (toList) {
+      try {
+
+        const phoneNumbers = await handleCsvToJson()
+        const idToken = await getIdTokenForApiCall()
+
+        const result: AxiosResponse = await axios.post("http://localhost:3001/whatsapp/send/list", {
+          numbers: phoneNumbers,
+          message: message
+        }, {headers: {idtoken: idToken}})
+
+        alert(result.data)
+      } catch (error: any) {
+        if (error.response != null) {
+          console.error(error.response)
+          return
+        }
+        console.log(error)
+      }
     }
   }
 
@@ -98,7 +121,13 @@ export default function MessageWrapper() {
             </label>
             {
               toList ?
+                <>
+                  <label>
+                    .cvs tiedosto missä A sarakkeella on numerot
+                  </label>
                   <input type="file" onChange={setFile} className="mx-1.5"/>
+                </>
+
                 :
                 <>
                   <label>
