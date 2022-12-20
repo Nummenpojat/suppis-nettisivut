@@ -24,7 +24,6 @@ export default function MessageWrapper() {
 
       let numbers: string[] = []
 
-      console.log(numbers)
       Papa.parse(selectedFile, {
         complete: (results: any) => {
           results.data.forEach((data: string) => {
@@ -32,11 +31,9 @@ export default function MessageWrapper() {
               numbers.push(data[0])
             }
           })
-          console.log(numbers)
           resolve(numbers)
         }
       })
-      console.log(numbers)
     })
   }
 
