@@ -45,9 +45,9 @@ export default function Navbar({children}: any) {
           </button>
         </nav>
       </div>
-      <div className={mobileNav ? "bg-partionsininen flex flex-col pt-[1.5em]" : "hidden"}>
+      <div className={mobileNav ? "bg-partionsininen flex flex-col px-[40px] pb-[20px]" : "hidden"}>
         {
-          children.map((child: any) => <div className="h-[60px] px-[30px] list-none">{child}</div>)
+          children.map((child: any) => <div className="h-[60px] list-none">{child}</div>)
         }
       </div>
     </header>
