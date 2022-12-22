@@ -78,11 +78,16 @@ export default function MessageWrapper() {
 
         alert(result.data)
       } catch (error: any) {
-        if (error.response != null) {
-          console.error(error.response)
+        if (error.response.status == 409) {
+
+          // Regex replaces all + with %2B because + can't be used in urls parameter values, so they are converted to %2B which is equivalent
+          setQr(error.response.data.replace(/\+/g, "%2B"))
+
+          setShowQr(true)
           return
+        } else {
+          alert(error.response.data)
         }
-        console.log(error)
       }
     }
   }
