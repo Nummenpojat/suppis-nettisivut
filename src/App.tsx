@@ -9,6 +9,7 @@ import Login from "./pages/login";
 import {onAuthStateChanged, User} from "firebase/auth";
 import {auth, verifyClaim} from "./firebaseConfig";
 import Error from "./pages/error";
+import Main from "./pages/main";
 
 function App() {
   useEffect(() => {
@@ -29,6 +30,7 @@ function App() {
       </Navbar>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Main/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/whatsapp/send" element={<MessageWrapper/>}/>
           <Route path="/*" element={<Error statusCode={404} message="Page not found"/>}/>

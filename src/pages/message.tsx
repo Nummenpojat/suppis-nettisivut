@@ -2,13 +2,40 @@ import React, {useState} from "react";
 import {getIdTokenForApiCall} from "../firebaseConfig";
 import axios, {AxiosResponse} from "axios";
 
+const Papa = require("papaparse")
+
 export default function MessageWrapper() {
   const [message, setMessage] = useState("")
   const [phoneNumber, setPhoneNumber] = useState("")
   const [qr, setQr] = useState("")
   const [toList, setToList] = useState(true)
-  const [all, setAll] = useState(true)
   const [showQr, setShowQr] = useState(false)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+
+  const setFile = (event: any) => {
+    setSelectedFile(event.target.files[0])
+  }
+
+  const handleCsvToJson = (): Promise<any> => {
+    return new Promise<any>((resolve, reject) => {
+      if (selectedFile == null) {
+        reject("You must select a file")
+      }
+
+      let numbers: string[] = []
+
+      Papa.parse(selectedFile, {
+        complete: (results: any) => {
+          results.data.forEach((data: string) => {
+            if (data[0] != null && data[0] != "") {
+              numbers.push(data[0])
+            }
+          })
+          resolve(numbers)
+        }
+      })
+    })
+  }
 
   const handleSend = async (event: any) => {
     event.preventDefault()
@@ -26,6 +53,31 @@ export default function MessageWrapper() {
 
       } catch (error: any) {
 
+        if (error.response.status == 409) {
+
+          // Regex replaces all + with %2B because + can't be used in urls parameter values, so they are converted to %2B which is equivalent
+          setQr(error.response.data.replace(/\+/g, "%2B"))
+
+          setShowQr(true)
+          return
+        } else {
+          alert(error.response.data)
+        }
+      }
+    }
+    if (toList) {
+      try {
+
+        const phoneNumbers = await handleCsvToJson()
+        const idToken = await getIdTokenForApiCall()
+
+        const result: AxiosResponse = await axios.post("http://localhost:3001/whatsapp/send/list", {
+          numbers: phoneNumbers,
+          message: message
+        }, {headers: {idtoken: idToken}})
+
+        alert(result.data)
+      } catch (error: any) {
         if (error.response.status == 409) {
 
           // Regex replaces all + with %2B because + can't be used in urls parameter values, so they are converted to %2B which is equivalent
@@ -73,16 +125,11 @@ export default function MessageWrapper() {
               toList ?
                 <>
                   <label>
-                    Mille ikäkausille viesti lähetetään
-                  </label><br/>
-                  <ul>
-                    <li>
-                      <input type="checkbox" className="m-1.5 checked:accent-mannynvihrea" defaultChecked={all}
-                             onClick={() => setAll(!all)}/>
-                      <label>Kaikki ikäkaudet</label>
-                    </li>
-                  </ul>
+                    .cvs tiedosto missä A sarakkeella on numerot
+                  </label>
+                  <input type="file" onChange={setFile} className="mx-1.5"/>
                 </>
+
                 :
                 <>
                   <label>
@@ -94,7 +141,7 @@ export default function MessageWrapper() {
                 </>
             }
             <input onClick={handleSend} type="submit" value="LÄHETÄ VIESTI"
-                   className="nummari-button mx-auto"/>
+                   className="nummari-button mx-auto block"/>
           </form>
         </section>
       }
