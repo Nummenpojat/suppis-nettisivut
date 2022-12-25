@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {getIdTokenForApiCall} from "../firebaseConfig";
+import {getAppCheckTokenForApiCall, getIdTokenForApiCall} from "../firebaseConfig";
 import axios, {AxiosResponse} from "axios";
 
 const Papa = require("papaparse")
@@ -14,6 +14,23 @@ export default function MessageWrapper() {
 
   const setFile = (event: any) => {
     setSelectedFile(event.target.files[0])
+  }
+
+  const handleMessageApiCallResponse = (error: any) => {
+    if (error.response == undefined) {
+      alert(error)
+      return
+    }
+
+    if (error.response.status == 409) {
+
+      // Regex replaces all + with %2B because + can't be used in urls parameter values, so they are converted to %2B which is equivalent
+      setQr(error.response.data.replace(/\+/g, "%2B"))
+
+      setShowQr(true)
+      return
+    }
+    alert(error.response.data)
   }
 
   const handleCsvToJson = (): Promise<any> => {
@@ -42,52 +59,47 @@ export default function MessageWrapper() {
     if (!toList) {
       try {
 
-        //
+        // Getting tokens from Firebase to send along the API request, so backend can ensure that user has correct access rights
         const idToken = await getIdTokenForApiCall()
+        const appCheckToken = await getAppCheckTokenForApiCall()
+
         const result: AxiosResponse = await axios.post("http://localhost:3001/whatsapp/send/one", {
           number: phoneNumber,
           message: message
-        }, {headers: {idtoken: idToken}})
+        }, {
+          headers: {
+            "X-Firebase-IdToken": idToken,
+            "X-Firebase-AppCheck": appCheckToken.token
+          }
+        })
 
         alert(result.data)
 
       } catch (error: any) {
-
-        if (error.response.status == 409) {
-
-          // Regex replaces all + with %2B because + can't be used in urls parameter values, so they are converted to %2B which is equivalent
-          setQr(error.response.data.replace(/\+/g, "%2B"))
-
-          setShowQr(true)
-          return
-        } else {
-          alert(error.response.data)
-        }
+        handleMessageApiCallResponse(error)
       }
     }
     if (toList) {
       try {
 
+        // Getting tokens from Firebase to send along the API request, so backend can ensure that user has correct access rights
         const phoneNumbers = await handleCsvToJson()
         const idToken = await getIdTokenForApiCall()
+        const appCheckToken = await getAppCheckTokenForApiCall()
 
         const result: AxiosResponse = await axios.post("http://localhost:3001/whatsapp/send/list", {
           numbers: phoneNumbers,
           message: message
-        }, {headers: {idtoken: idToken}})
+        }, {
+          headers: {
+            "X-Firebase-IdToken": idToken,
+            "X-Firebase-AppCheck": appCheckToken.token
+          }
+        })
 
         alert(result.data)
       } catch (error: any) {
-        if (error.response.status == 409) {
-
-          // Regex replaces all + with %2B because + can't be used in urls parameter values, so they are converted to %2B which is equivalent
-          setQr(error.response.data.replace(/\+/g, "%2B"))
-
-          setShowQr(true)
-          return
-        } else {
-          alert(error.response.data)
-        }
+        handleMessageApiCallResponse(error)
       }
     }
   }
