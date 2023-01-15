@@ -14,6 +14,10 @@ export default function MessageWrapper() {
 
   const setFile = (event: any) => {
     setSelectedFile(event.target.files[0])
+
+    if (!selectedFile?.name.endsWith(".cvs")) {
+      alert("File must be .cvs")
+    }
   }
 
   const handleMessageApiCallResponse = (error: any) => {
@@ -37,6 +41,10 @@ export default function MessageWrapper() {
     return new Promise<any>((resolve, reject) => {
       if (selectedFile == null) {
         reject("You must select a file")
+      }
+
+      if (!selectedFile?.name.endsWith(".cvs")) {
+        reject("File must be .cvs")
       }
 
       let numbers: string[] = []
