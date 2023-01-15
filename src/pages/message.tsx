@@ -145,7 +145,7 @@ export default function MessageWrapper() {
               toList ?
                 <>
                   <label>
-                    .cvs tiedosto missä A sarakkeella on numerot
+                    .csv tiedosto missä A sarakkeella on numerot
                   </label>
                   <input type="file" onChange={setFile} className="mx-1.5"/>
                 </>
