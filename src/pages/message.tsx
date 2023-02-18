@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {getAppCheckTokenForApiCall, getIdTokenForApiCall} from "../firebaseConfig";
+import {auth, getAppCheckTokenForApiCall, getIdTokenForApiCall} from "../firebaseConfig";
 import axios, {AxiosResponse} from "axios";
+import {onAuthStateChanged} from "firebase/auth";
 
 const Papa = require("papaparse")
 
@@ -11,30 +12,6 @@ export default function MessageWrapper() {
   const [toList, setToList] = useState(true)
   const [showQr, setShowQr] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
-
-  useEffect(() => {
-    const x = async () => {
-      try {
-
-        // Getting tokens from Firebase to send along the API request, so backend can ensure that user has correct access rights
-        const idToken = await getIdTokenForApiCall()
-        const appCheckToken = await getAppCheckTokenForApiCall()
-
-        const result: AxiosResponse = await axios.get("http://localhost:3001/whatsapp/status", {
-          headers: {
-            "X-Firebase-IdToken": idToken,
-            "X-Firebase-AppCheck": appCheckToken.token
-          }
-        })
-
-        console.log(result.data)
-
-      } catch (error: any) {
-        handleMessageApiCallResponse(error)
-      }
-    }
-    x()
-  }, [])
 
   const setFile = (event: any) => {
     setSelectedFile(event.target.files[0])

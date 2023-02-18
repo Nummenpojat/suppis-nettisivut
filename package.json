@@ -1,6 +1,6 @@
 {
   "name": "suppis-nettisivut",
-  "version": "2.0.0-Beta",
+  "version": "1.0.0-rc.1",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
