@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {getAppCheckTokenForApiCall, getIdTokenForApiCall} from "../firebaseConfig";
 import axios, {AxiosResponse} from "axios";
 
@@ -12,6 +12,30 @@ export default function MessageWrapper() {
   const [showQr, setShowQr] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
+  useEffect(() => {
+    const x = async () => {
+      try {
+
+        // Getting tokens from Firebase to send along the API request, so backend can ensure that user has correct access rights
+        const idToken = await getIdTokenForApiCall()
+        const appCheckToken = await getAppCheckTokenForApiCall()
+
+        const result: AxiosResponse = await axios.get("http://localhost:3001/whatsapp/status", {
+          headers: {
+            "X-Firebase-IdToken": idToken,
+            "X-Firebase-AppCheck": appCheckToken.token
+          }
+        })
+
+        console.log(result.data)
+
+      } catch (error: any) {
+        handleMessageApiCallResponse(error)
+      }
+    }
+    x()
+  }, [])
+
   const setFile = (event: any) => {
     setSelectedFile(event.target.files[0])
   }
@@ -22,10 +46,10 @@ export default function MessageWrapper() {
       return
     }
 
-    if (error.response.status == 409) {
+    if (error.response.data.type == "qr") {
 
       // Regex replaces all + with %2B because + can't be used in urls parameter values, so they are converted to %2B which is equivalent
-      setQr(error.response.data.replace(/\+/g, "%2B"))
+      setQr(error.response.data.data.replace(/\+/g, "%2B"))
 
       setShowQr(true)
       return
