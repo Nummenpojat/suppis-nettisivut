@@ -66,7 +66,8 @@ export const getIdTokenForApiCall = async () => {
 // Async function which gets AppCheck token for making request to the api
 export const getAppCheckTokenForApiCall = async () => {
   try {
-    return await getToken(appCheck, false)
+    const result = await getToken(appCheck, false)
+    return result.token
   } catch (error) {
     throw error
   }

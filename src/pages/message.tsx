@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {auth, getAppCheckTokenForApiCall, getIdTokenForApiCall} from "../firebaseConfig";
 import axios, {AxiosResponse} from "axios";
 import {onAuthStateChanged} from "firebase/auth";
+import {core} from "../App";
 
 const Papa = require("papaparse")
 
@@ -59,19 +60,9 @@ export default function MessageWrapper() {
     event.preventDefault()
     if (!toList) {
       try {
-
-        // Getting tokens from Firebase to send along the API request, so backend can ensure that user has correct access rights
-        const idToken = await getIdTokenForApiCall()
-        const appCheckToken = await getAppCheckTokenForApiCall()
-
-        const result: AxiosResponse = await axios.post("http://localhost:3001/whatsapp/send/one", {
+        const result: AxiosResponse = await core.post("whatsapp/send/one", {
           number: phoneNumber,
           message: message
-        }, {
-          headers: {
-            "X-Firebase-IdToken": idToken,
-            "X-Firebase-AppCheck": appCheckToken.token
-          }
         })
 
         alert(result.data)
@@ -82,20 +73,11 @@ export default function MessageWrapper() {
     }
     if (toList) {
       try {
-
-        // Getting tokens from Firebase to send along the API request, so backend can ensure that user has correct access rights
         const phoneNumbers = await handleCsvToJson()
-        const idToken = await getIdTokenForApiCall()
-        const appCheckToken = await getAppCheckTokenForApiCall()
 
-        const result: AxiosResponse = await axios.post("http://localhost:3001/whatsapp/send/list", {
+        const result: AxiosResponse = await core.post("/whatsapp/send/list", {
           numbers: phoneNumbers,
           message: message
-        }, {
-          headers: {
-            "X-Firebase-IdToken": idToken,
-            "X-Firebase-AppCheck": appCheckToken.token
-          }
         })
 
         alert(result.data)
