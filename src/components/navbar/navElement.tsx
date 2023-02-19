@@ -1,4 +1,4 @@
-import React, {ReactElement, ReactNode} from "react";
+import React, {ReactElement} from "react";
 
 export default function NavElement(props: { children?: ReactElement[], text: string, linksTo: string}) {
   return (

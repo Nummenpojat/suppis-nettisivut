@@ -1,7 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {auth, getAppCheckTokenForApiCall, getIdTokenForApiCall} from "../firebaseConfig";
-import axios, {AxiosResponse} from "axios";
-import {onAuthStateChanged} from "firebase/auth";
+import React, {useState} from "react";
+import {AxiosResponse} from "axios";
 import {core} from "../App";
 
 const Papa = require("papaparse")

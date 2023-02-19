@@ -12,9 +12,7 @@ import Error from "./pages/error";
 import Main from "./pages/main";
 import axios from "axios";
 
-export const core = axios.create({
-  baseURL: 'http://localhost:3001',
-});
+export const core = axios.create(require("./config/axios.json"));
 
 core.interceptors.request.use(async config => {
   config.headers = {

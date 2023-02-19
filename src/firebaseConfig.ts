@@ -15,14 +15,7 @@ import { initializeAppCheck, ReCaptchaV3Provider, getToken } from "firebase/app-
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBWcwH_q5vnqSRhtiIZShtNray1aYzRRtI",
-  authDomain: "suppis-382f9.firebaseapp.com",
-  projectId: "suppis-382f9",
-  storageBucket: "suppis-382f9.appspot.com",
-  messagingSenderId: "847554464937",
-  appId: "1:847554464937:web:2afeb9e429ff128bd12db8"
-};
+const firebaseConfig = require("./config/firebase.json")
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
