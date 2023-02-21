@@ -7,9 +7,22 @@ import MessageWrapper from "./pages/message";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Login from "./pages/login";
 import {onAuthStateChanged, User} from "firebase/auth";
-import {auth, verifyClaim} from "./firebaseConfig";
+import {auth, getAppCheckTokenForApiCall, getIdTokenForApiCall, verifyClaim} from "./firebaseConfig";
 import Error from "./pages/error";
 import Main from "./pages/main";
+import axios from "axios";
+
+export const core = axios.create({
+  baseURL: process.env.BASE_URL
+});
+
+core.interceptors.request.use(async config => {
+  config.headers = {
+    "X-Firebase-IdToken": await getIdTokenForApiCall(),
+    "X-Firebase-AppCheck": await getAppCheckTokenForApiCall()
+  }
+  return config;
+});
 
 function App() {
   useEffect(() => {
