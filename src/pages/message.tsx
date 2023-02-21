@@ -30,6 +30,12 @@ export default function MessageWrapper() {
       setShowQr(true)
       return
     }
+
+    if (error.response.status == 409) {
+      core.get("/api/whatsapp/status")
+        .catch(reason => handleMessageApiCallResponse(reason))
+    }
+
     alert(error.response.data)
   }
 
@@ -58,7 +64,7 @@ export default function MessageWrapper() {
     event.preventDefault()
     if (!toList) {
       try {
-        const result: AxiosResponse = await core.post("whatsapp/send/one", {
+        const result: AxiosResponse = await core.post("/api/whatsapp/send/one", {
           number: phoneNumber,
           message: message
         })
@@ -73,7 +79,7 @@ export default function MessageWrapper() {
       try {
         const phoneNumbers = await handleCsvToJson()
 
-        const result: AxiosResponse = await core.post("/whatsapp/send/list", {
+        const result: AxiosResponse = await core.post("/api/whatsapp/send/list", {
           numbers: phoneNumbers,
           message: message
         })
